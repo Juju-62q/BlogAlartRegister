@@ -3,8 +3,10 @@ version: '3'
 services:
   db:
     image: postgres
-    volume:
-    - pgsql-data:/var/lib/pgsql
+    volumes:
+    - ./pgsql-data:/var/lib/pgsql
+    env_file:
+      - .env
   web:
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
@@ -14,3 +16,5 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    env_file:
+      - .env
