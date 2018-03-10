@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    volume:
+    - pgsql-data:/var/lib/pgsql
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./src:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
