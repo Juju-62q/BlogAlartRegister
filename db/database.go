@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// Confidential is struct of DB confidential
+// Confidential is struct of db confidential
 type Confidential struct {
 	User     string
 	Password string
@@ -21,7 +21,7 @@ type Confidential struct {
 
 var instance *gorm.DB
 
-// GetDB gets DB instance
+// GetDB gets db instance
 func GetDB() (*gorm.DB, error) {
 	if instance != nil {
 		return instance, nil
