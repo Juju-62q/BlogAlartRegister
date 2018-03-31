@@ -1,19 +1,20 @@
-package g_calendar
+package gcalendar
 
 import (
-	"golang.org/x/oauth2"
-	"net/http"
-	"log"
+	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+	"net/url"
+	"os"
 	"os/user"
 	"path/filepath"
-	"os"
-	"net/url"
-	"encoding/json"
+
 	"golang.org/x/net/context"
+	"golang.org/x/oauth2"
 )
 
-// getClient uses a Context and Config to retrieve a Token
+// GetClient uses a Context and Config to retrieve a Token
 // then generate a Client. It returns the generated Client.
 func GetClient(ctx context.Context, config *oauth2.Config) *http.Client {
 	cacheFile, err := tokenCacheFile()

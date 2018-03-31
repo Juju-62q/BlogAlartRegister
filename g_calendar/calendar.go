@@ -1,21 +1,23 @@
-package g_calendar
+package gcalendar
 
 import (
-	"time"
-	"google.golang.org/api/calendar/v3"
 	"io/ioutil"
-	"golang.org/x/oauth2/google"
-	"golang.org/x/net/context"
 	"strings"
+	"time"
+
+	"golang.org/x/net/context"
+	"golang.org/x/oauth2/google"
+	"google.golang.org/api/calendar/v3"
 )
 
-const MAIL_ADDRESS_FILE = "/home/kenya/mail"
+const mailAddressFile = "/home/kenya/mail"
 
-func AddEvent(title string, locate string, description string, startTime time.Time, endTime time.Time) error{
+// AddEvent adds event to google calendar
+func AddEvent(title string, locate string, description string, startTime time.Time, endTime time.Time) error {
 
 	event := &calendar.Event{
-		Summary: title,
-		Location: locate,
+		Summary:     title,
+		Location:    locate,
 		Description: description,
 		Start: &calendar.EventDateTime{
 			DateTime: startTime.Format("2006-01-02T15:04:05") + "+09:00",
@@ -30,37 +32,37 @@ func AddEvent(title string, locate string, description string, startTime time.Ti
 	ctx := context.Background()
 
 	authData, err := ioutil.ReadFile("/home/kenya/client_secret.json")
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
 	config, err := google.ConfigFromJSON(authData, calendar.CalendarScope)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
 	client := GetClient(ctx, config)
 
 	srv, err := calendar.New(client)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
 	mailAddress, err := getMailAddress()
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
 	_, err = srv.Events.Insert(mailAddress, event).Do()
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func getMailAddress()(string, error){
-	mailAddress, err := ioutil.ReadFile(MAIL_ADDRESS_FILE)
+func getMailAddress() (string, error) {
+	mailAddress, err := ioutil.ReadFile(mailAddressFile)
 	if err != nil {
 		return "", err
 	}

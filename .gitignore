@@ -20,4 +20,4 @@
 vendor/*
 
 # variable
-DB/.env
+.env

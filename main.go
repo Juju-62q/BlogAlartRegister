@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	DB.TestConnect()
+	db.GetDB()
 	i := 1
 	println(i)
 }
