@@ -11,6 +11,7 @@ import (
 	"github.com/Juju-62q/BlogAlartRegister/db"
 )
 
+// Member is struct of OthloMember
 type Member struct {
 	ID           string    `gorm:"column:id"`
 	Name         string    `gorm:"column:name"`
@@ -18,6 +19,7 @@ type Member struct {
 	GraduateDate time.Time `gorm:"column:graduateDate"`
 }
 
+// TableName is name of DB table in Django
 func (m *Member) TableName() string {
 	return "OthloMember_member"
 }
