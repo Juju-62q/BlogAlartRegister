@@ -7,6 +7,8 @@ import (
 
 	"math/rand"
 
+	"fmt"
+
 	"github.com/Juju-62q/BlogAlartRegister/db"
 	"github.com/Juju-62q/BlogAlartRegister/g_calendar"
 )
@@ -53,8 +55,10 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		date = nextWeek(date)date.AddDate(0, 0, 7)
+		date = nextWeek(date)
 		gcalendar.AddEvent("ブログ"+member.Name, "OthloBlog", member.SlackName, date, date.Add(1*time.Hour))
+
+		fmt.Println(date.Format("2006/01/02") + " " + member.SlackName)
 	}
 }
 
