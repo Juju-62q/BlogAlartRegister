@@ -8,8 +8,14 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"math/rand"
+
 	"github.com/Juju-62q/BlogAlartRegister/db"
 )
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
 
 // Member is struct of OthloMember
 type Member struct {
@@ -30,8 +36,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var allMember []*Member
+	var allMember []Member
 	database.Find(&allMember)
+	shuffle(allMember)
 	for _, member := range allMember {
 		bytes, err := json.Marshal(member)
 		if err != nil {
@@ -39,4 +46,13 @@ func main() {
 		}
 		fmt.Println(string(bytes))
 	}
+}
+
+func shuffle(data []Member) {
+	n := len(data)
+	for i := n - 1; i >= 0; i-- {
+		j := rand.Intn(i + 1)
+		data[i], data[j] = data[j], data[i]
+	}
+	return
 }
